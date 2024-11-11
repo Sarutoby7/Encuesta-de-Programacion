@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Programación en Vue</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>  
+
+    <section id="seccion">
+        <header>
+            <h1>Encuesta de Programación</h1>        
+        </header>
+        <h2>{{ saludar }}</h2>
+
+        <!-- Pregunta: ¿Te gusta programar? -->
+        <div>
+            <label>¿Te gusta programar?</label><br>
+            <input type="radio" id="si" value="Sí" v-model="gustarProgramar">
+            <label for="si">Sí</label>
+            <input type="radio" id="no" value="No" v-model="gustarProgramar">
+            <label for="no">No</label>
+        </div>
+        
+        <!-- Pregunta: ¿Cuántos años llevas programando? -->
+        <div>
+            <label>¿Cuánto años llevas programando?</label>
+            <input type="number" v-model="aniosProgramando" min="0">
+        </div>
+        
+        <!-- Pregunta: Cuéntanos tu experiencia programando -->
+        <div>
+            <label>Cuéntanos tu experiencia programando:</label>
+            <textarea v-model="experienciaProgramando" rows="3"></textarea>
+        </div>
+        
+        <!-- Pregunta: ¿Cuántos lenguajes de programación conoces? -->
+        <div>
+            <label>¿Cuántos lenguajes de programación conoces? Ingresa los lenguajes uno por uno:</label>
+            <input type="text" v-model="nuevoLenguaje" @keyup.enter="agregarLenguaje">
+            <button @click="agregarLenguaje">Agregar</button>
+            <ul>
+                <li v-for="(lenguaje, index) in lenguajesConocidos" :key="index">
+                    {{ lenguaje }}
+                    <button @click="eliminarLenguaje(index)">X</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Botón para mostrar resultados -->
+        <button @click="mostrarResultados = !mostrarResultados">Mostrar resultados</button>
+        
+        <!-- Resultados -->
+        <div v-if="mostrarResultados">
+            <h4>Resultados:</h4>
+            <p><strong>¿Te gusta programar?:</strong> {{ gustarProgramar }}</p>
+            <p><strong>Años programando:</strong> {{ aniosProgramando }}</p>
+            <p><strong>Experiencia:</strong> {{ experienciaProgramando }}</p>
+            <p><strong>Lenguajes conocidos:</strong> {{ lenguajesConocidos.join(', ') }}</p>
+        </div>
+    </section>
+    
+    <script src="js/main.js"></script>     
+</body>
+</html>
